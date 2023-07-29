@@ -48,6 +48,7 @@ def transcribe(
     prepend_punctuations: str = "\"'“¿([{-",
     append_punctuations: str = "\"'.。,，!！?？:：”)]}、",
     **decode_options,
+    pbar_cls=tqdm.tqdm,
 ):
     """
     Transcribe an audio file using Whisper
@@ -219,7 +220,7 @@ def transcribe(
         }
 
     # show the progress bar when verbose is False (if True, transcribed text will be printed)
-    with tqdm.tqdm(
+    with pbar_cls(
         total=content_frames, unit="frames", disable=verbose is not False
     ) as pbar:
         last_speech_timestamp = 0.0
